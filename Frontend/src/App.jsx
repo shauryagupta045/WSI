@@ -45,17 +45,15 @@ const outputJson = {
   "date": "2024-12-09"
 };
 
-// Parse inference_results with error handling
+
 let inferenceResults;
 try {
   const inferenceResultsString = outputJson.inference_results.replace(/'/g, '"');
-  // Optional: Log the string around position 11283 to debug in your environment
-  // console.log('String length:', inferenceResultsString.length);
-  // console.log('Snippet around 11283:', inferenceResultsString.substring(11280, 11290));
+ 
   inferenceResults = JSON.parse(inferenceResultsString);
 } catch (e) {
   console.error('Failed to parse inference_results:', e);
-  // Fallback data if parsing fails
+ 
   inferenceResults = {
     delayTime: 950,
     executionTime: 7223,
@@ -64,18 +62,18 @@ try {
   };
 }
 
-// Extract and normalize detection results
+
 const detectionResults = inferenceResults.output.detection_results.map(
   ([x1, y1, x2, y2, className]) => ({
     bbox: [x1 / 1024, y1 / 512, (x2 - x1) / 1024, (y2 - y1) / 512],
     class: className,
-    confidence: 1.0 // Confidence not provided, default to 1.0
+    confidence: 1.0 
   })
 );
 
-// Set image URL (adjust path as needed)
-const imageUrl = '/public/7_20241209_024613.png'; // Ensure this matches your public folder structure
-const hubViewImageUrl = imageUrl; // Use a separate zoomed-out image if available
+
+const imageUrl = 'https://img.freepik.com/premium-photo/photomicrograph-suggestive-megaloblastic-anemia-rule-out-pernicious-anemia_595440-3548.jpg?w=1380';
+const hubViewImageUrl = imageUrl; 
 
 function App() {
   return (
